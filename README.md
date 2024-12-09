@@ -47,7 +47,7 @@ browsir [profile] [shortcut]
 
 ### Configuration 🔧
 
-1. Create or modify `.browsir.yml` in your home directory:
+1. Create or modify `.browsir.yml` in your browsir directory:
    ```yaml
    app_name: browsir
    browser_name: chrome  # can be 'chrome', 'brave', or 'arc'
