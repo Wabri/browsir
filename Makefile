@@ -7,7 +7,7 @@ CONFIG_PATH=/etc/browsir
 all: build
 
 build:
-	go build -o $(BINARY_NAME)
+	go build -o $(BINARY_NAME) ./cmd/browsir
 
 clean:
 	go clean
