@@ -42,7 +42,18 @@ make build
 ## Usage 📖
 
 ```bash
-browsir [profile] [shortcut]
+# Open browser with profile
+browsir [profile] [shortcut | website]
+
+browsir personal mail
+browsir personal gmail.com
+
+# Search on google, duckduckgo and bravesearch
+# Default search engine is google
+browsir [profile] [-se | --search-engine]=[google | brave | duckduckgo] -q=[your query]
+
+browsir personal -q="What's the distance between the moon and the sun"
+browsir personal -se=brave -q="Is Brave better for privacy"
 ```
 
 ### Configuration 🔧
