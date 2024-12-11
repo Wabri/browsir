@@ -7,7 +7,7 @@ CONFIG_PATH=/etc/browsir
 all: build
 
 build:
-	go build -o $(BINARY_NAME) ./cmd/browsir
+	go build -o dist/$(BINARY_NAME) ./cmd/browsir
 
 clean:
 	go clean
@@ -17,7 +17,7 @@ install: build
 	sudo mkdir -p $(CONFIG_PATH)
 	sudo ln -sf "$(PWD)/.browsir.yml" "$(CONFIG_PATH)/config.yml" || true
 	sudo ln -sf "$(PWD)/shortcuts" "$(CONFIG_PATH)/shortcuts" || true
-	sudo ln -sf "$(PWD)/$(BINARY_NAME)" "$(INSTALL_PATH)/$(BINARY_NAME)"
+	sudo ln -sf "$(PWD)/dist/$(BINARY_NAME)" "$(INSTALL_PATH)/$(BINARY_NAME)"
 	@echo "Created symlink to $(BINARY_NAME) in $(INSTALL_PATH)"
 	@echo "Created symlinks to config files in $(CONFIG_PATH)"
 	@echo "You can now run 'browsir' from anywhere"
