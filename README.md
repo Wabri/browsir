@@ -1,4 +1,4 @@
-<img style="width: 200px; display: flex; justify-content: center;" src="https://github.com/user-attachments/assets/c531f18b-5886-464a-a189-971b39134aee" />
+<img style="width: 250px; text-align: center;" src="https://github.com/user-attachments/assets/c531f18b-5886-464a-a189-971b39134aee" />
 
 
 # Browsir 🎩
