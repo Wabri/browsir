@@ -1,0 +1,11 @@
+# Changelog
+
+## [Unreleased]
+
+## [0.1.1] - 2023-10-12
+### Added
+- Searching functionality
+
+## [0.1.0] - 2023-10-05
+### Added
+- Initial creation of the application with the possibility to use multiple browsers and profiles

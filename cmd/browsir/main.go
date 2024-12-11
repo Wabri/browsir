@@ -22,7 +22,11 @@ func main() {
 	}
 
 	if flags["-v"] != "" || flags["--version"] != "" {
-		fmt.Println("browsir v1.0.0")
+		if version := os.Getenv("BROWSIR_VERSION"); version != "" {
+			fmt.Println("browsir v" + version)
+		} else {
+			fmt.Println("browsir version not set")
+		}
 		os.Exit(0)
 	}
 
