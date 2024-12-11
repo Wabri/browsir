@@ -1,4 +1,6 @@
-<img style="width: 250px; text-align: center; display: inline-block; margin: 0 auto;" src="https://github.com/user-attachments/assets/c531f18b-5886-464a-a189-971b39134aee" />
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/c531f18b-5886-464a-a189-971b39134aee" alt="Browsir Logo" width="250">
+</div>
 
 
 # Browsir 🎩
