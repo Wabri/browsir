@@ -33,7 +33,11 @@ A simple yet powerful command-line tool to manage multiple browser profiles and 
    ```
    This will build the binary and install it to `/usr/local/bin`
 
-3. Verify the installation:
+   It might prompt you for the password. This is because we are trying to write files in locations like `/etc/`.
+
+   You do have the source code tho, so you can either check that everything is nice _or_ you can change the installation folders yourself in the Makefile!
+
+4. Verify the installation:
    ```bash
    browsir --version
    ```
