@@ -5,7 +5,7 @@ profiles:
     profile_dir: Default  # actual profile directory name
     description: Personal browsing
   - name: work
-    profile_dir: Profile 1
+    profile_dir: Profile 3
     description: Work profile
 shortcuts:
   google: google.com

@@ -3,23 +3,31 @@ package main
 import (
 	"bufio"
 	"fmt"
-	cnf "github.com/404answernotfound/browsir/config"
-	"github.com/404answernotfound/browsir/utils"
 	"os"
 	"strings"
+
+	cnf "github.com/404answernotfound/browsir/config"
+	"github.com/404answernotfound/browsir/utils"
 )
 
 func main() {
 	config := cnf.LoadConfig()
 	localShortcuts := utils.LoadLocalShortcuts()
 
-	if len(os.Args) == 1 || os.Args[1] == "-h" || os.Args[1] == "--help" {
+	flags := utils.GetFlags(os.Args[1:])
+
+	if flags["-h"] != "" || flags["--help"] != "" {
 		utils.PrintUsage(config.Profiles, config.Shortcuts, localShortcuts)
 		os.Exit(0)
 	}
 
-	if os.Args[1] == "-v" || os.Args[1] == "--version" {
+	if flags["-v"] != "" || flags["--version"] != "" {
 		fmt.Println("browsir v1.0.0")
+		os.Exit(0)
+	}
+
+	if flags["-ls"] != "" || flags["--list-shortcuts"] != "" {
+		utils.PrintLocalShortcuts(config.Shortcuts)
 		os.Exit(0)
 	}
 
@@ -27,26 +35,40 @@ func main() {
 	var url string
 	args := os.Args[1:]
 
-	// Check if first arg contains a dot or is a shortcut
-	if strings.Contains(args[0], ".") || strings.HasPrefix(args[0], "http") ||
-		localShortcuts[args[0]] != "" || config.Shortcuts[args[0]] != "" {
-		profileName = "default"
-		url = args[0]
-	} else {
-		profileName = args[0]
-		if len(args) > 1 {
-			url = args[1]
-		}
-	}
-
 	var selectedProfile cnf.Profile
 	var found bool
+	profileName = args[0]
+
 	for _, p := range config.Profiles {
 		if p.Name == profileName {
 			selectedProfile = p
 			found = true
 			break
 		}
+	}
+
+	if flags["-q"] != "" {
+		fmt.Println("Searching...")
+		cleanQuery := strings.ReplaceAll(flags["-q"], " ", "+")
+		cleanQuery = strings.ReplaceAll(cleanQuery, "\"", "")
+
+		if flags["-se"] != "" || flags["--search-engine"] != "" {
+			searchEngine := flags["-se"]
+			if searchEngine == "" {
+				searchEngine = flags["--search-engine"]
+			}
+			utils.Search(config.BrowserName, selectedProfile, searchEngine, cleanQuery)
+			os.Exit(0)
+		}
+
+		searchEngine := "google"
+		utils.Search(config.BrowserName, selectedProfile, searchEngine, cleanQuery)
+
+		os.Exit(0)
+	}
+
+	if len(args) > 1 {
+		url = args[1]
 	}
 
 	if !found {

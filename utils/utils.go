@@ -3,12 +3,13 @@ package utils
 import (
 	"bufio"
 	"fmt"
-	"github.com/404answernotfound/browsir/config"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
+
+	"github.com/404answernotfound/browsir/config"
 )
 
 func LoadLocalShortcuts() map[string]string {
@@ -215,4 +216,50 @@ func PromptYesNo(prompt string) bool {
 			return false
 		}
 	}
+}
+
+func PrintLocalShortcuts(shortcuts map[string]string) {
+	for shortcut, url := range shortcuts {
+		fmt.Printf("  %-12s -> %s\n", shortcut, url)
+	}
+}
+
+func Search(browserName string, profile config.Profile, searchEngine string, searchTerm string) error {
+
+	var url string
+	if searchTerm != "" {
+		switch searchEngine {
+		case "google":
+			url = fmt.Sprintf("google.com/search?q=%s", searchTerm)
+		case "duckduckgo":
+			url = fmt.Sprintf("duckduckgo.com//?q=%s", searchTerm)
+		case "brave":
+			url = fmt.Sprintf("search.brave.com/search?q=%s", searchTerm)
+		default:
+			url = fmt.Sprintf("google.com/search?q=%s", searchTerm)
+		}
+		url = "https://" + url
+	}
+
+	OpenBrowser(browserName, profile, url)
+
+	return nil
+}
+
+func GetFlags(args []string) map[string]string {
+	flags := make(map[string]string)
+	if args == nil {
+		return flags
+	}
+	for _, arg := range args {
+		if strings.HasPrefix(arg, "-") || strings.HasPrefix(arg, "--") {
+			parts := strings.SplitN(arg, "=", 2)
+			if len(parts) == 2 {
+				flags[parts[0]] = parts[1]
+			} else {
+				flags[arg] = ""
+			}
+		}
+	}
+	return flags
 }
