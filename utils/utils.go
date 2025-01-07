@@ -3,12 +3,13 @@ package utils
 import (
 	"bufio"
 	"fmt"
-	"github.com/404answernotfound/browsir/config"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
+
+	"github.com/404answernotfound/browsir/config"
 )
 
 func LoadLocalShortcuts() map[string]string {
@@ -120,6 +121,8 @@ func GetBrowserPath(browserName string) (string, error) {
 		}
 	case "linux":
 		switch browserName {
+		case "firefox":
+			return "firefox", nil
 		case "chrome":
 			return "google-chrome", nil
 		case "brave":
@@ -148,7 +151,13 @@ func OpenBrowser(browserName string, profile config.Profile, url string) error {
 		return err
 	}
 
-	args := []string{"--profile-directory=" + profile.ProfileDir}
+	var args []string
+	if browserName == "firefox" {
+		args = []string{"-P", profile.ProfileDir}
+	} else {
+		args = []string{"--profile-directory=" + profile.ProfileDir}
+	}
+
 	if url != "" {
 		if !strings.HasPrefix(url, "http://") && !strings.HasPrefix(url, "https://") {
 			url = "https://" + url
