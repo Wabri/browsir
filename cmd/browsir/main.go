@@ -14,30 +14,41 @@ func main() {
 	config := cnf.LoadConfig()
 	localShortcuts := utils.LoadLocalShortcuts()
 
-	flags := utils.GetFlags(os.Args[1:])
+	args := os.Args[1:]
 
-	if flags["-h"] != "" || flags["--help"] != "" {
-		utils.PrintUsage(config.Profiles, config.Shortcuts, localShortcuts)
-		os.Exit(0)
-	}
+	primitiveFlags := []string{"-v", "--version", "-h", "--help", "-ls", "--list-shortcuts", "-p", "--profiles"}
+	var shouldExit bool
 
-	if flags["-v"] != "" || flags["--version"] != "" {
-		if version := os.Getenv("BROWSIR_VERSION"); version != "" {
-			fmt.Println("browsir v" + version)
-		} else {
-			fmt.Println("browsir version not set")
+	for _, arg := range args {
+		switch arg {
+		case "-h", "--help":
+			utils.PrintUsage(config.Profiles, config.Shortcuts, localShortcuts)
+		case "-v", "--version":
+			if version := os.Getenv("BROWSIR_VERSION"); version != "" {
+				fmt.Println("  browsir v" + version)
+			} else {
+				fmt.Println("  browsir version not set")
+			}
+		case "-ls", "--list-shortcuts":
+			utils.PrintLocalShortcuts(config.Shortcuts)
+		case "-p", "--profiles":
+			utils.PrintProfiles(config.Profiles)
 		}
+
+		if utils.Contains(primitiveFlags, arg) {
+			shouldExit = true
+		}
+	}
+
+	// This is to allow multiple primitive flags to be handled
+	if shouldExit {
 		os.Exit(0)
 	}
 
-	if flags["-ls"] != "" || flags["--list-shortcuts"] != "" {
-		utils.PrintLocalShortcuts(config.Shortcuts)
-		os.Exit(0)
-	}
+	flags := utils.GetFlags(args)
 
 	var profileName string
 	var url string
-	args := os.Args[1:]
 
 	var selectedProfile cnf.Profile
 	var found bool

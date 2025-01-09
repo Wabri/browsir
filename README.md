@@ -69,6 +69,16 @@ browsir personal -q="What's the distance between the moon and the sun"
 browsir personal -se=brave -q="Is Brave better for privacy"
 ```
 
+## Available commands and flags
+
+```bash
+-ls, --list-shortcuts, list all shortcuts
+-se, --search-engine, set search engine for search
+-q, query search engine
+-v, --version, check browsir version
+-h, --help, help
+```
+
 ### Configuration 🔧
 
 1. Create or modify `.browsir.yml` in your browsir directory:

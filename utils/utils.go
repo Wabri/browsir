@@ -196,6 +196,13 @@ func PrintUsage(profiles []config.Profile, shortcuts map[string]string, localSho
 	fmt.Println("  browsir default mail           # Open mail shortcut with default profile")
 }
 
+func PrintProfiles(profiles []config.Profile) {
+	fmt.Println("\nProfiles:")
+	for _, p := range profiles {
+		fmt.Printf("  %-12s - %s\n", p.Name, p.Description)
+	}
+}
+
 func FindSimilarShortcuts(input string, shortcuts, localShortcuts map[string]string) []string {
 	var similar []string
 	for shortcut := range shortcuts {
@@ -270,4 +277,13 @@ func GetFlags(args []string) map[string]string {
 		}
 	}
 	return flags
+}
+
+func Contains(args []string, value string) bool {
+	for _, arg := range args {
+		if arg == value {
+			return true
+		}
+	}
+	return false
 }
