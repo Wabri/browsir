@@ -271,3 +271,12 @@ func GetFlags(args []string) map[string]string {
 	}
 	return flags
 }
+
+func Contains(args []string, value string) bool {
+	for _, arg := range args {
+		if arg == value {
+			return true
+		}
+	}
+	return false
+}
