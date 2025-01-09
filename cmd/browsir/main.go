@@ -31,6 +31,8 @@ func main() {
 			}
 		case "-ls", "--list-shortcuts":
 			utils.PrintLocalShortcuts(config.Shortcuts)
+		case "-p", "--profiles":
+			utils.PrintProfiles(config.Profiles)
 		}
 
 		if utils.Contains(primitiveFlags, arg) {
