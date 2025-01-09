@@ -14,7 +14,7 @@ A simple yet powerful command-line tool to manage multiple browser profiles and 
 - Support for both global (config file) and local shortcuts
 - Smart shortcut suggestions when typos occur
 - Interactive shortcut creation
-- Support for Chrome, Brave and Arc browsers (on macOS)
+- Support for Firefox, Chrome, Brave and Arc browsers (on macOS)
 - Cross-platform: works on macOS, Linux and Windows
 
 ## Installation 🚀
@@ -22,15 +22,18 @@ A simple yet powerful command-line tool to manage multiple browser profiles and 
 ### From Source
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/yourusername/browsir.git
    cd browsir
    ```
 
 2. Build and install:
+
    ```bash
    make install
    ```
+
    This will build the binary and install it to `/usr/local/bin`
 
    It might prompt you for the password. This is because we are trying to write files in locations like `/etc/`.
@@ -43,6 +46,7 @@ A simple yet powerful command-line tool to manage multiple browser profiles and 
    ```
 
 You can also just build without installing:
+
 ```bash
 make build
 ./browsir --version
@@ -70,10 +74,10 @@ browsir personal -se=brave -q="Is Brave better for privacy"
 1. Create or modify `.browsir.yml` in your browsir directory:
    ```yaml
    app_name: browsir
-   browser_name: chrome  # can be 'chrome', 'brave', or 'arc'
+   browser_name: chrome # can be 'firefox', 'chrome', 'brave', or 'arc'
    profiles:
-     - name: personal    # profile name you'll use in commands
-       profile_dir: Default  # actual profile directory name
+     - name: personal # profile name you'll use in commands
+       profile_dir: Default # actual profile directory name
        description: Personal browsing
      - name: work
        profile_dir: Profile 1
@@ -85,11 +89,14 @@ browsir personal -se=brave -q="Is Brave better for privacy"
    ```
 
 The configuration file allows you to:
-- Set your preferred browser (`chrome`, `brave`, or `arc`)
+
+- Set your preferred browser (`firefox`, `chrome`, `brave`, or `arc`)
 - Define multiple browser profiles with custom names
 - Add global shortcuts to frequently visited websites
 
 You can find your Chrome profile directory names by visiting:
+
 - Chrome: `chrome://version`
 - Brave: `brave://version`
 - Arc: `arc://version`
+- Firefox: `about:profiles`
