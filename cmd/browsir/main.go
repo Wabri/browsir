@@ -16,7 +16,7 @@ func main() {
 
 	args := os.Args[1:]
 
-	primitiveFlags := []string{"-v", "--version", "-h", "--help", "-ls", "--list-shortcuts"}
+	primitiveFlags := []string{"-v", "--version", "-h", "--help", "-ls", "--list-shortcuts", "-p", "--profiles"}
 	var shouldExit bool
 
 	for _, arg := range args {
