@@ -197,7 +197,6 @@ func PrintUsage(profiles []config.Profile, shortcuts map[string]string, localSho
 }
 
 func PrintProfiles(profiles []config.Profile) {
-	fmt.Println("\nProfiles:")
 	for _, p := range profiles {
 		fmt.Printf("  %-12s - %s\n", p.Name, p.Description)
 	}
