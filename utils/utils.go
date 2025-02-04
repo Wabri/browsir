@@ -214,6 +214,22 @@ func PrintUsage(profiles []config.Profile, shortcuts map[string]string, localSho
 	fmt.Println("  browsir work                    # Open browser with work profile")
 	fmt.Println("  browsir personal gmail.com      # Open Gmail with personal profile")
 	fmt.Println("  browsir default mail           # Open mail shortcut with default profile")
+
+	fmt.Println("\nOther commands:")
+	fmt.Println("  -h, --help            # Print this help message")
+	fmt.Println("  -v, --version         # Print browsir version")
+	fmt.Println("  -ls, --list-shortcuts # List all shortcuts")
+	fmt.Println("  -p, --profiles        # List all profiles")
+	fmt.Println("  -q        		     # Search the web with a query")
+	fmt.Println("  -se, --search-engine  # Specify search engine (google, duckduckgo, brave)")
+
+	fmt.Println("   browsir add link <link> -c <categories>	# Add a link with categories")
+	fmt.Println("   browsir add shortcut <shortcut> <url>	# Add a local shortcut, do not include http:// or https://")
+	fmt.Println("   browsir rm link <link>					# Remove a link")
+	fmt.Println("   browsir rm shortcut <shortcut>			# Remove a local shortcut")
+	fmt.Println("   browsir list links						# List all links")
+	fmt.Println("   browsir list all						# List all links and categories")
+	fmt.Println("   browsir preview <link>					# Preview a link")
 }
 
 func PrintProfiles(profiles []config.Profile) {
