@@ -2,9 +2,9 @@ package config
 
 import (
 	"fmt"
-	"gopkg.in/yaml.v3"
 	"os"
-	"path/filepath"
+
+	"gopkg.in/yaml.v3"
 )
 
 type Config struct {
@@ -21,30 +21,11 @@ type Profile struct {
 }
 
 func LoadConfig() Config {
-	home, err := os.UserHomeDir()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error getting home directory: %v\n", err)
-		os.Exit(1)
-	}
 
 	// First check system config directory
 	configPath := "/etc/browsir/config.yml"
 
-	// Then check XDG config directory
-	if _, err := os.Stat(configPath); os.IsNotExist(err) {
-		xdgConfigHome := os.Getenv("XDG_CONFIG_HOME")
-		if xdgConfigHome == "" {
-			xdgConfigHome = filepath.Join(home, ".config")
-		}
-		configPath = filepath.Join(xdgConfigHome, "browsir", "config.yml")
-	}
-
-	// Then check home directory
-	if _, err := os.Stat(configPath); os.IsNotExist(err) {
-		configPath = filepath.Join(home, ".browsir.yml")
-	}
-
-	// Finally check current directory
+	// Check current directory
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		configPath = ".browsir.yml"
 	}
