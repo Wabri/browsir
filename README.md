@@ -29,7 +29,7 @@ A simple yet powerful command-line tool to manage multiple browser profiles and 
 
 2. Build and install:
 
-  #### READ ME Before you continue the installation
+  **READ ME Before you continue the installation**
 
   If you already used `browsir` and are downloading it with `clone` instead of pulling latest updates from `main`
   you risk overwriting your `links` and `shortcuts` files, alongside your `.browsir.yml` file. This will force you
