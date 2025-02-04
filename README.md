@@ -2,7 +2,6 @@
   <img src="https://github.com/user-attachments/assets/c531f18b-5886-464a-a189-971b39134aee" alt="Browsir Logo" width="250">
 </div>
 
-
 # Browsir 🎩
 
 A simple yet powerful command-line tool to manage multiple browser profiles and shortcuts.
@@ -40,7 +39,7 @@ A simple yet powerful command-line tool to manage multiple browser profiles and 
 
    You do have the source code tho, so you can either check that everything is nice _or_ you can change the installation folders yourself in the Makefile!
 
-4. Verify the installation:
+3. Verify the installation:
    ```bash
    browsir --version
    ```
@@ -67,6 +66,15 @@ browsir [profile] [-se | --search-engine]=[google | brave | duckduckgo] -q=[your
 
 browsir personal -q="What's the distance between the moon and the sun"
 browsir personal -se=brave -q="Is Brave better for privacy"
+
+# Manage links and shortcuts
+browsir add link <link> -c <categories>    # Add a link with categories
+browsir add shortcut <shortcut> <url>      # Add a local shortcut, do not include http:// or https://
+browsir rm link <link>                     # Remove a link
+browsir rm shortcut <shortcut>             # Remove a local shortcut
+browsir list links                         # List all links
+browsir list all                           # List all links and categories
+browsir preview <link>                     # Preview a link
 ```
 
 ## Available commands and flags
