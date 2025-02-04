@@ -15,27 +15,8 @@ import (
 func LoadLocalShortcuts() map[string]string {
 	shortcuts := make(map[string]string)
 
-	home, err := os.UserHomeDir()
-	if err != nil {
-		return shortcuts
-	}
-
 	// First check system config directory
 	shortcutsPath := "/etc/browsir/shortcuts"
-
-	// Then check XDG config directory
-	if _, err := os.Stat(shortcutsPath); os.IsNotExist(err) {
-		xdgConfigHome := os.Getenv("XDG_CONFIG_HOME")
-		if xdgConfigHome == "" {
-			xdgConfigHome = filepath.Join(home, ".config")
-		}
-		shortcutsPath = filepath.Join(xdgConfigHome, "browsir", "shortcuts")
-	}
-
-	// Then check home directory
-	if _, err := os.Stat(shortcutsPath); os.IsNotExist(err) {
-		shortcutsPath = filepath.Join(home, ".browsir_shortcuts")
-	}
 
 	// Finally check current directory
 	if _, err := os.Stat(shortcutsPath); os.IsNotExist(err) {
@@ -61,11 +42,71 @@ func LoadLocalShortcuts() map[string]string {
 	return shortcuts
 }
 
-func SaveLocalShortcut(shortcut, url string) error {
-	home, err := os.UserHomeDir()
+// TODO: Add other paths
+func LoadLinks() map[string]string {
+	var links = make(map[string]string)
+	var linksPath string
+
+	// First check system config directory
+	linksPath = "/etc/browsir/links"
+
+	if _, err := os.Stat(linksPath); os.IsNotExist(err) {
+		linksPath = "links"
+	}
+
+	data, err := os.ReadFile(linksPath)
+	if err != nil {
+		return links
+	}
+
+	lines := strings.Split(string(data), "\n")
+	for _, line := range lines {
+		line = strings.TrimSpace(line)
+		if line == "" || strings.HasPrefix(line, "#") {
+			continue
+		}
+		parts := strings.SplitN(line, "|", 2)
+		if len(parts) == 2 {
+			links[strings.TrimSpace(parts[0])] = strings.TrimSpace(parts[1])
+		}
+	}
+
+	return links
+}
+
+func SaveLink(link string, categories string) error {
+
+	linksPath := "/etc/browsir/links"
+
+	categoriesSlice := strings.Split(categories, ",")
+	var categoriesToString string
+
+	if len(categoriesSlice) == 0 {
+		categoriesToString = "general"
+	}
+
+	categoriesToString = strings.Join(categoriesSlice, ",")
+
+	f, err := os.OpenFile(linksPath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err == nil {
+
+		defer f.Close()
+		// Writing to file https://somelink.com|some category
+		_, err = fmt.Fprintf(f, "%s|%s\n", link, categoriesToString)
+		return err
+	}
+
+	f, err = os.OpenFile("links", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return err
 	}
+	defer f.Close()
+
+	_, err = fmt.Fprintf(f, "%s|%s\n", link, categoriesToString)
+	return err
+}
+
+func SaveLocalShortcut(shortcut, url string) error {
 
 	// First try system config directory
 	shortcutsPath := "/etc/browsir/shortcuts"
@@ -76,31 +117,10 @@ func SaveLocalShortcut(shortcut, url string) error {
 		return err
 	}
 
-	// Then try XDG config directory
-	xdgConfigHome := os.Getenv("XDG_CONFIG_HOME")
-	if xdgConfigHome == "" {
-		xdgConfigHome = filepath.Join(home, ".config")
-	}
-	configDir := filepath.Join(xdgConfigHome, "browsir")
-	if err := os.MkdirAll(configDir, 0755); err == nil {
-		shortcutsPath := filepath.Join(configDir, "shortcuts")
-		f, err := os.OpenFile(shortcutsPath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-		if err == nil {
-			defer f.Close()
-			_, err = fmt.Fprintf(f, "%s=%s\n", shortcut, url)
-			return err
-		}
-	}
-
-	// Then try home directory
-	shortcutsPath = filepath.Join(home, ".browsir_shortcuts")
-	f, err = os.OpenFile(shortcutsPath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	// Finally try current directory
+	f, err = os.OpenFile("shortcuts", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
-		// Finally try current directory
-		f, err = os.OpenFile("shortcuts", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-		if err != nil {
-			return err
-		}
+		return err
 	}
 	defer f.Close()
 
@@ -286,4 +306,10 @@ func Contains(args []string, value string) bool {
 		}
 	}
 	return false
+}
+
+func Log(args ...any) {
+	for _, arg := range args {
+		fmt.Println(arg)
+	}
 }

@@ -18,14 +18,19 @@ func main() {
 	args := os.Args[1:]
 
 	// Check for restricted keywords before parsing flags and running profiles
-	restrictedKeywords := []string{"add-link", "add-shortcut", "rm-link", "search", "list", "preview"}
+	restrictedKeywords := []string{"add", "rm", "list", "preview"}
 
 	for _, keyword := range restrictedKeywords {
 		if strings.Contains(args[0], keyword) {
 			mainCmd := args[0]
 			otherArgs := args[1:]
-			browsir.RunCommand(mainCmd, otherArgs)
+			err := browsir.RunCommand(mainCmd, otherArgs)
+			if err != nil {
+				fmt.Println(err)
+			}
 			os.Exit(0)
+		} else {
+			fmt.Errorf("Provide a valid command")
 		}
 	}
 
