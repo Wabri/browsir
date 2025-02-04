@@ -29,15 +29,21 @@ A simple yet powerful command-line tool to manage multiple browser profiles and 
 
 2. Build and install:
 
-   ```bash
-   make install
-   ```
+#### READ ME Before you continue the installation
 
-   This will build the binary and install it to `/usr/local/bin`
+If you already used `browsir` and are downloading it with `clone` instead of pulling latest updates from `main`
+you risk overwriting your `links` and `shortcuts` files, alongside your `.browsir.yml` file. This will force you
+to enter all the previously saved informations again, so, until an actual installer is ready, be sure to either pull the latest updates _OR_ save your configurations somewhere else, clone and then swap them with the new ones.
 
-   It might prompt you for the password. This is because we are trying to write files in locations like `/etc/`.
+```bash
+make install
+```
 
-   You do have the source code tho, so you can either check that everything is nice _or_ you can change the installation folders yourself in the Makefile!
+This will build the binary and install it to `/usr/local/bin`
+
+It might prompt you for the password. This is because we are trying to write files in locations like `/etc/`.
+
+You do have the source code tho, so you can either check that everything is nice _or_ you can change the installation folders yourself in the Makefile!
 
 3. Verify the installation:
    ```bash
