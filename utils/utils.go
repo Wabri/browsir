@@ -3,6 +3,7 @@ package utils
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -87,16 +88,19 @@ func SaveLink(link string, categories string) error {
 
 	categoriesToString = strings.Join(categoriesSlice, ",")
 
-	f, err := os.OpenFile(linksPath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err == nil {
+	f, err := os.OpenFile(linksPath, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0644)
+	CheckDuplicates(f, link, 0, "link", "|")
 
+	if err == nil {
 		defer f.Close()
 		// Writing to file https://somelink.com|some category
 		_, err = fmt.Fprintf(f, "%s|%s\n", link, categoriesToString)
 		return err
 	}
 
-	f, err = os.OpenFile("links", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	f, err = os.OpenFile("links", os.O_APPEND|os.O_CREATE|os.O_RDWR, 0644)
+	CheckDuplicates(f, link, 0, "link", "|")
+
 	if err != nil {
 		return err
 	}
@@ -110,21 +114,32 @@ func SaveLocalShortcut(shortcut, url string) error {
 
 	// First try system config directory
 	shortcutsPath := "/etc/browsir/shortcuts"
-	f, err := os.OpenFile(shortcutsPath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+
+	f, err := os.OpenFile(shortcutsPath, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0644)
+	CheckDuplicates(f, url, 1, "shortcut", "=")
+
 	if err == nil {
 		defer f.Close()
 		_, err = fmt.Fprintf(f, "%s=%s\n", shortcut, url)
+		if err == nil {
+			fmt.Printf("Shortcut %s correctly saved", shortcut)
+		}
 		return err
 	}
 
 	// Finally try current directory
-	f, err = os.OpenFile("shortcuts", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
+	f, err = os.OpenFile("shortcuts", os.O_APPEND|os.O_CREATE|os.O_RDWR, 0644)
+	CheckDuplicates(f, url, 1, "shortcut", "=")
+
+	if err == nil {
+		defer f.Close()
+		_, err = fmt.Fprintf(f, "%s=%s\n", shortcut, url)
+		if err == nil {
+			fmt.Printf("Shortcut %s correctly saved", shortcut)
+		}
 		return err
 	}
-	defer f.Close()
 
-	_, err = fmt.Fprintf(f, "%s=%s\n", shortcut, url)
 	return err
 }
 
@@ -327,5 +342,22 @@ func Contains(args []string, value string) bool {
 func Log(args ...any) {
 	for _, arg := range args {
 		fmt.Println(arg)
+	}
+}
+
+func ExitLog(exitMessage string) {
+	fmt.Println(exitMessage)
+	os.Exit(0)
+}
+
+func CheckDuplicates(f io.Reader, url string, pos int, t string, separator string) {
+	buf := bufio.NewScanner(f)
+	for buf.Scan() {
+		line := buf.Text()
+		splittedLine := strings.Split(line, separator)
+		if len(splittedLine) > 1 && splittedLine[pos] == url {
+			fmt.Printf("%s already exists with url %s", t, splittedLine[0])
+			os.Exit(0)
+		}
 	}
 }

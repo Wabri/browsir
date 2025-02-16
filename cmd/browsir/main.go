@@ -12,8 +12,14 @@ import (
 )
 
 func main() {
+
 	config := cnf.LoadConfig()
 	localShortcuts := utils.LoadLocalShortcuts()
+
+	if len(os.Args) == 1 {
+		utils.PrintUsage(config.Profiles, config.Shortcuts, localShortcuts)
+		os.Exit(0)
+	}
 
 	args := os.Args[1:]
 

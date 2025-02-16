@@ -17,9 +17,11 @@ type Command struct{}
 
 // add, rm, list, preview
 func (c Command) add(args []string) error {
-
 	switch args[0] {
 	case "link":
+		if len(args) < 2 {
+			utils.ExitLog("Please, see --help flag to check usage for add command")
+		}
 		flags := utils.GetFlags(args[2:])
 		link := args[1]
 
@@ -34,6 +36,9 @@ func (c Command) add(args []string) error {
 		}
 		return nil
 	case "shortcut":
+		if len(args) < 3 {
+			utils.ExitLog("Please, see --help flag to check usage for add command")
+		}
 		shortcut := args[1]
 		url := args[2]
 		err := utils.SaveLocalShortcut(shortcut, url)
