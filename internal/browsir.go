@@ -1,7 +1,11 @@
 package browsir
 
 import (
+	"context"
 	"fmt"
+	"io"
+	"net/http"
+	"time"
 
 	"github.com/404answernotfound/browsir/utils"
 )
@@ -59,9 +63,31 @@ func (c Command) list(args []string) error {
 	}
 	return nil
 }
-
 func (c Command) preview(args []string) error {
-	return fmt.Errorf("preview not implemented")
+	ctx := context.Background()
+	deadline := time.Now().Add(3000 * time.Millisecond)
+	ctx, cancel := context.WithDeadline(ctx, deadline)
+	defer cancel()
+
+	req, err := http.NewRequestWithContext(ctx, "GET", "https://404answernotfound.eu", nil)
+	if err != nil {
+		return fmt.Errorf("error creating request: %s", err)
+	}
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return fmt.Errorf("error making request: %s", err)
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("error reading response body: %s", err)
+	}
+
+	fmt.Println(string(body))
+	return nil
 }
 
 func RunCommand(mainCmd string, otherArgs []string) error {
