@@ -3,11 +3,14 @@ package browsir
 import (
 	"context"
 	"fmt"
+	"strings"
+
 	"io"
 	"net/http"
 	"time"
 
 	"github.com/404answernotfound/browsir/utils"
+	"github.com/PuerkitoBio/goquery"
 )
 
 type ICommand interface {
@@ -69,7 +72,7 @@ func (c Command) preview(args []string) error {
 	ctx, cancel := context.WithDeadline(ctx, deadline)
 	defer cancel()
 
-	req, err := http.NewRequestWithContext(ctx, "GET", "https://404answernotfound.eu", nil)
+	req, err := http.NewRequestWithContext(ctx, "GET", args[0], nil)
 	if err != nil {
 		return fmt.Errorf("error creating request: %s", err)
 	}
@@ -86,7 +89,21 @@ func (c Command) preview(args []string) error {
 		return fmt.Errorf("error reading response body: %s", err)
 	}
 
-	fmt.Println(string(body))
+	doc, err := goquery.NewDocumentFromReader(strings.NewReader(string(body)))
+
+	title := doc.Find("title").Text()
+	fmt.Printf("Title: %s\n", title)
+
+	description, exists := doc.Find("meta[name='description']").Attr("content")
+	if exists {
+		fmt.Printf("Description: %s\n", description)
+	} else {
+		fmt.Println("No meta description found.")
+	}
+
+	allH1Tags := doc.Find("h1").Text()
+	fmt.Printf("H1 Tags: %v\n", allH1Tags)
+
 	return nil
 }
 
