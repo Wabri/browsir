@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	"github.com/404answernotfound/browsir/config"
+	"github.com/PuerkitoBio/goquery"
 )
 
 func LoadLocalShortcuts() map[string]string {
@@ -360,4 +361,12 @@ func CheckDuplicates(f io.Reader, url string, pos int, t string, separator strin
 			os.Exit(0)
 		}
 	}
+}
+
+func FindHtmlNode(doc *goquery.Document, search []string) []string {
+	values := make([]string, 0)
+	for _, term := range search {
+		values = append(values, doc.Find(term).Text())
+	}
+	return values
 }

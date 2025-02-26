@@ -1,9 +1,16 @@
 package browsir
 
 import (
+	"context"
 	"fmt"
+	"strings"
+
+	"io"
+	"net/http"
+	"time"
 
 	"github.com/404answernotfound/browsir/utils"
+	"github.com/PuerkitoBio/goquery"
 )
 
 type ICommand interface {
@@ -59,9 +66,45 @@ func (c Command) list(args []string) error {
 	}
 	return nil
 }
-
 func (c Command) preview(args []string) error {
-	return fmt.Errorf("preview not implemented")
+	ctx := context.Background()
+	deadline := time.Now().Add(3000 * time.Millisecond)
+	ctx, cancel := context.WithDeadline(ctx, deadline)
+	defer cancel()
+
+	req, err := http.NewRequestWithContext(ctx, "GET", args[0], nil)
+	if err != nil {
+		return fmt.Errorf("error creating request: %s", err)
+	}
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return fmt.Errorf("error making request: %s", err)
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("error reading response body: %s", err)
+	}
+
+	doc, err := goquery.NewDocumentFromReader(strings.NewReader(string(body)))
+
+	title := doc.Find("title").Text()
+	fmt.Printf("Title: %s\n", title)
+
+	description, exists := doc.Find("meta[name='description']").Attr("content")
+	if exists {
+		fmt.Printf("Description: %s\n", description)
+	} else {
+		fmt.Println("No meta description found.")
+	}
+
+	allH1Tags := doc.Find("h1").Text()
+	fmt.Printf("H1 Tags: %v\n", allH1Tags)
+
+	return nil
 }
 
 func RunCommand(mainCmd string, otherArgs []string) error {
