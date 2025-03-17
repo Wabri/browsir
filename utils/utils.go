@@ -144,6 +144,61 @@ func SaveLocalShortcut(shortcut, url string) error {
 	return err
 }
 
+func RemoveLocalShortcut(shortcut string) error {
+	shortcutsPath := "./shortcuts"
+
+	// First open shortcut file
+	f, err := os.Open(shortcutsPath)
+	
+	if err != nil {
+		return err
+	}
+	
+	defer f.Close()
+	
+	// Create a temp empty file
+	tempFilePath := shortcutsPath + ".tmp"
+	tempFile, err := os.Create(tempFilePath)
+	if err != nil {
+		return err
+	}
+	
+	defer tempFile.Close()
+	
+	scanner := bufio.NewScanner(f)
+	writer := bufio.NewWriter(tempFile)
+	
+	// Loop the shortcut file and copy in the temp only the ones that don't match the requested one
+	found := false
+	for scanner.Scan() {
+		line := scanner.Text()
+		if strings.HasPrefix(line, shortcut + "=") {
+			found = true
+			continue
+		}
+		fmt.Fprintln(writer, line)
+	}
+
+	// if not found returns related error
+	if !found {
+		return fmt.Errorf("shortcut '%v' not found", shortcut)
+	}
+	
+	if err := scanner.Err(); err != nil {
+		return err
+	}
+	
+	writer.Flush()
+	
+	// Replace the temp file as the new shortcut file
+	if err := os.Rename(tempFilePath, shortcutsPath); err != nil {
+		return err
+	}
+
+	fmt.Printf("Shortcut %s correctly removed!\n", shortcut)
+	return nil
+}
+
 func GetBrowserPath(browserName string) (string, error) {
 	switch runtime.GOOS {
 	case "darwin":
