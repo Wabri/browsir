@@ -123,7 +123,7 @@ func SaveLocalShortcut(shortcut, url string) error {
 		defer f.Close()
 		_, err = fmt.Fprintf(f, "%s=%s\n", shortcut, url)
 		if err == nil {
-			fmt.Printf("Shortcut %s correctly saved", shortcut)
+			fmt.Printf("Shortcut %s correctly saved\n", shortcut)
 		}
 		return err
 	}
