@@ -145,10 +145,10 @@ func SaveLocalShortcut(shortcut, url string) error {
 }
 
 func RemoveLocalShortcut(shortcut string) error {
-	shortcutsPath := "./shortcuts"
+	shortcutsPath := "/etc/browsir/shortcuts"
 
 	// First open shortcut file
-	f, err := os.Open(shortcutsPath)
+	f, err := os.OpenFile(shortcutsPath, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0644)
 	
 	if err != nil {
 		return err
@@ -192,6 +192,12 @@ func RemoveLocalShortcut(shortcut string) error {
 	
 	// Replace the temp file as the new shortcut file
 	if err := os.Rename(tempFilePath, shortcutsPath); err != nil {
+		return err
+	}
+
+	err = os.Remove(tempFilePath)
+
+	if err != nil {
 		return err
 	}
 
