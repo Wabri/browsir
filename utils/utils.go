@@ -149,20 +149,17 @@ func RemoveLocalShortcut(shortcut string) error {
 
 	// First open shortcut file
 	f, err := os.OpenFile(shortcutsPath, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0644)
-	
 	if err != nil {
 		return err
 	}
-	
 	defer f.Close()
-	
+
 	// Create a temp empty file
 	tempFilePath := shortcutsPath + ".tmp"
 	tempFile, err := os.Create(tempFilePath)
 	if err != nil {
 		return err
 	}
-	
 	defer tempFile.Close()
 	
 	scanner := bufio.NewScanner(f)
@@ -183,7 +180,6 @@ func RemoveLocalShortcut(shortcut string) error {
 	if !found {
 		return fmt.Errorf("shortcut '%v' not found", shortcut)
 	}
-	
 	if err := scanner.Err(); err != nil {
 		return err
 	}
