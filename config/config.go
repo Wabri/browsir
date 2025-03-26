@@ -20,15 +20,32 @@ type Profile struct {
 	Description string `yaml:"description"`
 }
 
+func findConfigFile() (string, error) {
+  configHome := os.Getenv("XDG_CONFIG_HOME")
+  if configHome == "" {
+    configHome = os.Getenv("HOME") + "/.config"
+  }
+  configPath := configHome + "/browsir/config.yml"
+
+  if _, err := os.Stat(configPath); err == nil {
+    return configPath, nil
+  }
+
+  // Fallback to /etc
+  configPath = "/etc/browsir/config.yml"
+  if _, err := os.Stat(configPath); err == nil {
+    return configPath, nil
+  }
+
+  return "", fmt.Errorf("config file not found")
+}
+
 func LoadConfig() Config {
-
-	// First check system config directory
-	configPath := "/etc/browsir/config.yml"
-
-	// Check current directory
-	if _, err := os.Stat(configPath); os.IsNotExist(err) {
-		configPath = ".browsir.yml"
-	}
+    configPath, err := findConfigFile()
+	if err != nil {
+      fmt.Println("No config file found")
+      return Config{}
+    }
 
 	data, err := os.ReadFile(configPath)
 	if err != nil {
