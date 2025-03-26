@@ -159,6 +159,8 @@ func GetBrowserPath(browserName string) (string, error) {
 		switch browserName {
 		case "firefox":
 			return "firefox", nil
+		case "vivaldi":
+			return "vivaldi", nil
 		case "chrome":
 			return "google-chrome", nil
 		case "brave":
