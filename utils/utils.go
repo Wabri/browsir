@@ -211,6 +211,10 @@ func GetBrowserPath(browserName string) (string, error) {
 			return "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser", nil
 		case "arc":
 			return "/Applications/Arc.app/Contents/MacOS/Arc", nil
+		case "firefox":
+			return "/Applications/Firefox.app/Contents/MacOS/firefox", nil
+		case "firefox-developer-edition":
+			return "/Applications/Firefox Developer Edition.app/Contents/MacOS/firefox", nil
 		}
 	case "linux":
 		switch browserName {

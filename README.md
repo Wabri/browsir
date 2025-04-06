@@ -29,21 +29,21 @@ A simple yet powerful command-line tool to manage multiple browser profiles and 
 
 2. Build and install:
 
-  **READ ME Before you continue the installation**
+   **READ ME Before you continue the installation**
 
-  If you already used `browsir` and are downloading it with `clone` instead of pulling latest updates from `main`
-  you risk overwriting your `links` and `shortcuts` files, alongside your `.browsir.yml` file. This will force you
-  to enter all the previously saved informations again, so, until an actual installer is ready, be sure to either pull the latest updates _OR_ save your configurations somewhere else, clone and then swap them with the installed ones.
+If you already used `browsir` and are downloading it with `clone` instead of pulling latest updates from `main`
+you risk overwriting your `links` and `shortcuts` files, alongside your `.browsir.yml` file. This will force you
+to enter all the previously saved informations again, so, until an actual installer is ready, be sure to either pull the latest updates _OR_ save your configurations somewhere else, clone and then swap them with the installed ones.
 
-   ```bash
-   make install
-   ```
+```bash
+make install
+```
 
-   This will build the binary and install it to `/usr/local/bin`
+This will build the binary and install it to `/usr/local/bin`
 
-   It might prompt you for the password. This is because we are trying to write files in locations like `/etc/`.
+It might prompt you for the password. This is because we are trying to write files in locations like `/etc/`.
 
-   You do have the source code tho, so you can either check that everything is nice _or_ you can change the installation folders yourself in the Makefile!
+You do have the source code tho, so you can either check that everything is nice _or_ you can change the installation folders yourself in the Makefile!
 
 3. Verify the installation:
    ```bash
@@ -123,4 +123,9 @@ You can find your Chrome profile directory names by visiting:
 - Chrome: `chrome://version`
 - Brave: `brave://version`
 - Arc: `arc://version`
-- Firefox: `about:profiles`
+- Firefox & Firefox Developer Edition: `about:profiles`
+
+> [!NOTE]
+> When using both Firefox and Firefox Developer Edition on MacOS, ensure each app uses its appropriate profile.
+> For example, the "My Firefox Developer Edition Profile" in `about:profiles` should always be opened with the Firefox Developer Edition app.
+> Using the wrong profile with either app will cause them to crash.
