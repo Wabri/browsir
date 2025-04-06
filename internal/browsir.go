@@ -3,6 +3,7 @@ package browsir
 import (
 	"context"
 	"fmt"
+	"os"
 	"strings"
 
 	"io"
@@ -26,9 +27,11 @@ type Command struct{}
 func (c Command) add(args []string) error {
 	switch args[0] {
 	case "link":
-		if len(args) < 2 {
-			utils.ExitLog("Please, see --help flag to check usage for add command")
+		err := utils.CheckInputArgs(len(args), 2);
+		if err != nil {
+			os.Exit(0)
 		}
+
 		flags := utils.GetFlags(args[2:])
 		link := args[1]
 
@@ -37,18 +40,20 @@ func (c Command) add(args []string) error {
 			return fmt.Errorf("not a good flag")
 		}
 
-		err := utils.SaveLink(link, categories)
+		err = utils.SaveLink(link, categories)
 		if err != nil {
 			return err
 		}
 		return nil
 	case "shortcut":
-		if len(args) < 3 {
-			utils.ExitLog("Please, see --help flag to check usage for add command")
+		err := utils.CheckInputArgs(len(args), 3);
+		if err != nil {
+			os.Exit(0)
 		}
+
 		shortcut := args[1]
 		url := args[2]
-		err := utils.SaveLocalShortcut(shortcut, url)
+		err = utils.SaveLocalShortcut(shortcut, url)
 		return err
 	default:
 		return fmt.Errorf("unknown command: %s", args[0])
@@ -60,11 +65,13 @@ func (c Command) remove(args []string) error {
 	case "link":
 		fmt.Println("rm link is not yet implemented")
 	case "shortcut":
-		if len(args) < 2 {
-			utils.ExitLog("Please, see --help flag to check usage for add command")
+		err := utils.CheckInputArgs(len(args), 2);
+		if err != nil {
+			os.Exit(0)
 		}
+
 		shortcut := args[1]
-		err := utils.RemoveLocalShortcut(shortcut)
+		err = utils.RemoveLocalShortcut(shortcut)
 		if err != nil {
 			return err
 		}
