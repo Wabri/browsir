@@ -55,8 +55,21 @@ func (c Command) add(args []string) error {
 	}
 }
 
-func (c Command) rm(args []string) error {
-	return fmt.Errorf("rm not implemented")
+func (c Command) remove(args []string) error {
+	switch args[0] {
+	case "link":
+		fmt.Println("rm link is not yet implemented")
+	case "shortcut":
+		if len(args) < 2 {
+			utils.ExitLog("Please, see --help flag to check usage for add command")
+		}
+		shortcut := args[1]
+		err := utils.RemoveLocalShortcut(shortcut)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (c Command) list(args []string) error {
@@ -116,7 +129,7 @@ func RunCommand(mainCmd string, otherArgs []string) error {
 		err = command.add(otherArgs)
 		return err
 	case "rm":
-		err = command.rm(otherArgs)
+		err = command.remove(otherArgs)
 		return err
 	case "list":
 		err = command.list(otherArgs)
