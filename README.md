@@ -125,7 +125,7 @@ You can find your Chrome profile directory names by visiting:
 - Arc: `arc://version`
 - Firefox & Firefox Developer Edition: `about:profiles`
 
-> [!NOTE]  
-> If you are using Firefox and Firefox Developer Edition in MacOS, make sure that the profiles you select and/or create
-> are appropiate to each type of app otherwise both app witll crash
-> i.e: "My Firefox Developer Edition Profile" in about:profiles should **always** be opened with the Firefox Developer Edition app.
+> [!NOTE]
+> When using both Firefox and Firefox Developer Edition on MacOS, ensure each app uses its appropriate profile.
+> For example, the "My Firefox Developer Edition Profile" in `about:profiles` should always be opened with the Firefox Developer Edition app.
+> Using the wrong profile with either app will cause them to crash.
