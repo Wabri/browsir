@@ -2,6 +2,7 @@ package utils
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -432,4 +433,12 @@ func FindHtmlNode(doc *goquery.Document, search []string) []string {
 		values = append(values, doc.Find(term).Text())
 	}
 	return values
+}
+
+func CheckInputArgs (currentArgs, expectedArgs int) error {
+	if currentArgs < expectedArgs {
+		fmt.Printf("You provided %d arguments, while %d are needed.\nPlease, see --help flag to check usage for add command\n", currentArgs, expectedArgs)
+		return errors.New("not enough arguments")
+	}
+	return nil
 }
