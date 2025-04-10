@@ -252,8 +252,8 @@ func OpenBrowser(browserName string, profile config.Profile, url string) error {
 	}
 
 	var args []string
-	if browserName == "firefox" {
-		args = []string{"-P", profile.ProfileDir}
+	if browserName == "firefox" || browserName == "firefox-developer-edition" {
+		args = []string{"-profile", profile.ProfileDir}
 	} else {
 		args = []string{"--profile-directory=" + profile.ProfileDir}
 	}
