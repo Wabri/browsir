@@ -3,7 +3,6 @@ package utils
 import (
 	"bufio"
 	"errors"
-	"log"
 	"fmt"
 	"io"
 	"os"
@@ -256,7 +255,6 @@ func OpenBrowser(browserName string, profile config.Profile, url string) error {
 
 	var args []string
 	if browserName == "firefox" || browserName == "firefox-developer-edition" || browserName == "zen" {
-		log.Println(browserName)
 		args = []string{"-profile", profile.ProfileDir}
 	} else {
 		args = []string{"--profile-directory=" + profile.ProfileDir}
