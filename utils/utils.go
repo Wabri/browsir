@@ -3,6 +3,7 @@ package utils
 import (
 	"bufio"
 	"errors"
+	"log"
 	"fmt"
 	"io"
 	"os"
@@ -212,6 +213,8 @@ func GetBrowserPath(browserName string) (string, error) {
 			return "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser", nil
 		case "arc":
 			return "/Applications/Arc.app/Contents/MacOS/Arc", nil
+		case "zen":
+			return "/Applications/Zen.app/Contents/MacOS/zen", nil
 		case "firefox":
 			return "/Applications/Firefox.app/Contents/MacOS/firefox", nil
 		case "firefox-developer-edition":
@@ -252,7 +255,8 @@ func OpenBrowser(browserName string, profile config.Profile, url string) error {
 	}
 
 	var args []string
-	if browserName == "firefox" || browserName == "firefox-developer-edition" {
+	if browserName == "firefox" || browserName == "firefox-developer-edition" || browserName == "zen" {
+		log.Println(browserName)
 		args = []string{"-profile", profile.ProfileDir}
 	} else {
 		args = []string{"--profile-directory=" + profile.ProfileDir}
