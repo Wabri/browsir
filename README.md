@@ -13,7 +13,7 @@ A simple yet powerful command-line tool to manage multiple browser profiles and 
 - Support for both global (config file) and local shortcuts
 - Smart shortcut suggestions when typos occur
 - Interactive shortcut creation
-- Support for Firefox, Chrome, Brave Zen and Arc browsers (on macOS)
+- Support for Firefox, Chrome, Brave, Zen and Arc browsers (on macOS)
 - Cross-platform: works on macOS, Linux and Windows
 
 ## Installation 🚀
