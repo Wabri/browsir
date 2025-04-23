@@ -13,7 +13,7 @@ A simple yet powerful command-line tool to manage multiple browser profiles and 
 - Support for both global (config file) and local shortcuts
 - Smart shortcut suggestions when typos occur
 - Interactive shortcut creation
-- Support for Firefox, Chrome, Brave and Arc browsers (on macOS)
+- Support for Firefox, Chrome, Brave, Zen and Arc browsers (on macOS)
 - Cross-platform: works on macOS, Linux and Windows
 
 ## Installation 🚀
@@ -98,7 +98,7 @@ browsir preview <link>                     # Preview a link
 1. Create or modify `.browsir.yml` in your browsir directory:
    ```yaml
    app_name: browsir
-   browser_name: chrome # can be 'firefox', 'chrome', 'brave', or 'arc'
+   browser_name: chrome # can be 'firefox', 'chrome', 'brave', 'zen' or 'arc'
    profiles:
      - name: personal # profile name you'll use in commands
        profile_dir: Default # actual profile directory name
@@ -114,7 +114,7 @@ browsir preview <link>                     # Preview a link
 
 The configuration file allows you to:
 
-- Set your preferred browser (`firefox`, `chrome`, `brave`, or `arc`)
+- Set your preferred browser (`firefox`, `chrome`, `brave`, `arc`, `zen`)
 - Define multiple browser profiles with custom names
 - Add global shortcuts to frequently visited websites
 
@@ -123,9 +123,9 @@ You can find your Chrome profile directory names by visiting:
 - Chrome: `chrome://version`
 - Brave: `brave://version`
 - Arc: `arc://version`
-- Firefox & Firefox Developer Edition: `about:profiles`
+- Firefox, Firefox Developer Edition & Zen: `about:profiles`
 
 > [!NOTE]
-> When using both Firefox and Firefox Developer Edition on MacOS, ensure each app uses its appropriate profile.
+> When using both Firefox, Firefox Developer Edition or Zen on MacOS, ensure each app uses its appropriate profile.
 > For example, the "My Firefox Developer Edition Profile" in `about:profiles` should always be opened with the Firefox Developer Edition app.
 > Using the wrong profile with either app will cause them to crash.
