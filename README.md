@@ -129,3 +129,34 @@ You can find your Chrome profile directory names by visiting:
 > When using both Firefox, Firefox Developer Edition or Zen on MacOS, ensure each app uses its appropriate profile.
 > For example, the "My Firefox Developer Edition Profile" in `about:profiles` should always be opened with the Firefox Developer Edition app.
 > Using the wrong profile with either app will cause them to crash.
+
+## Maintainers 👨‍💻👩‍💻
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/404answernotfound">
+          <img src="https://github.com/404answernotfound.png" width="100px;" alt="Lorenzo Pieri"/>
+          <br />
+          <sub>
+            <b>Lorenzo Pieri</b>
+          </sub>
+        </a>
+        <br />
+        <span>💻 Maintainer</span>
+      </td>
+      <td align="center">
+        <a href="https://github.com/Wabri">
+          <img src="https://github.com/Wabri.png" width="100px;" alt="Gabriele Puliti"/>
+          <br />
+          <sub>
+            <b>Gabriele Puliti</b>
+          </sub>
+        </a>
+        <br />
+        <span>💻 Maintainer</span>
+      </td>
+    </tr>
+  </table>
+</div>
