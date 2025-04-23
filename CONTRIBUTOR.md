@@ -2,15 +2,10 @@
 
 Browsir uses GitHub Actions for continuous integration and automated workflows. The CI setup includes:
 
-### Automated Checks
+### Automated checks
 - **Commit Lint**: Enforces conventional commit messages (e.g., `feat:`, `fix:`, `docs:`, etc.)
 - **Golangci-lint**: Runs static code analysis and style checks
 - **Go Tests**: Executes all tests in the project
-
-### Automated PR Management
-- **Auto Merge**: Automatically merges PRs when they meet the following criteria:
-  - PR is mergeable
-  - All CI checks pass
 
 ### How to Use the CI Features
 
@@ -37,5 +32,4 @@ Browsir uses GitHub Actions for continuous integration and automated workflows. 
 
 ### CI Configuration Files
 - `.github/workflows/ci.yaml`: Main CI workflow with linting and testing
-- `.github/workflows/auto-merge.yaml`: Automated PR management workflow
 - `.commitlintrc.json`: Commit message linting configuration
