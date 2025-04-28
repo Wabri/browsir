@@ -1,0 +1,13 @@
+app_name: browsir
+browser_name: chrome  # can be 'chrome', 'brave', or 'arc'
+profiles:
+  - name: personal    # profile name you'll use in commands
+    profile_dir: Default  # actual profile directory name
+    description: Personal browsing
+  - name: work
+    profile_dir: Profile 3
+    description: Work profile
+shortcuts:
+  google: google.com
+  github: github.com
+  mail: gmail.com

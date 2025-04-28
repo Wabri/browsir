@@ -1,6 +1,7 @@
 package config
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
@@ -21,45 +22,34 @@ type Profile struct {
 }
 
 func findConfigFile() (string, error) {
-  configHome := os.Getenv("XDG_CONFIG_HOME")
-  if configHome == "" {
-    configHome = os.Getenv("HOME") + "/.config"
-  }
-  configPath := configHome + "/browsir/config.yml"
+	configHome := os.Getenv("XDG_CONFIG_HOME")
+	if configHome == "" {
+		configHome = os.Getenv("HOME") + "/.config"
+	}
+	configPath := configHome + "/browsir/config.yml"
 
-  if _, err := os.Stat(configPath); err == nil {
-    return configPath, nil
-  }
+	if _, err := os.Stat(configPath); err == nil {
+		return configPath, nil
+	}
 
-  // Fallback to /etc
-  configPath = "/etc/browsir/config.yml"
-  if _, err := os.Stat(configPath); err == nil {
-    return configPath, nil
-  }
+	// Fallback to /etc
+	configPath = "/etc/browsir/config.yml"
+	if _, err := os.Stat(configPath); err == nil {
+		return configPath, nil
+	}
 
-  return "", fmt.Errorf("config file not found")
+	return "", fmt.Errorf("config file not found")
 }
 
-func LoadConfig() Config {
-    configPath, err := findConfigFile()
+func LoadConfig() (Config, error) {
+	configPath, err := findConfigFile()
 	if err != nil {
-      fmt.Println("No config file found")
-      return Config{}
-    }
+		return Config{}, errors.New("config file not found")
+	}
 
 	data, err := os.ReadFile(configPath)
 	if err != nil {
-		// Return default config if file doesn't exist
-		return Config{
-			AppName:     "browsir",
-			BrowserName: "chrome",
-			Profiles: []Profile{
-				{Name: "default", ProfileDir: "Default", Description: "Default profile"},
-			},
-			Shortcuts: map[string]string{
-				"cal": "calendar.google.com",
-			},
-		}
+		return Config{}, errors.New("error reading config file")
 	}
 
 	var config Config
@@ -85,5 +75,5 @@ func LoadConfig() Config {
 		}
 	}
 
-	return config
+	return config, nil
 }

@@ -18,7 +18,7 @@ clean:
 
 install: build
 	sudo mkdir -p $(CONFIG_PATH)
-	sudo ln -sf "$(PWD)/.browsir.yml" "$(CONFIG_PATH)/config.yml" || true
+	sudo ln -sf "$(PWD)/config.yml" "$(CONFIG_PATH)/config.yml" || true
 	sudo ln -sf "$(PWD)/shortcuts" "$(CONFIG_PATH)/shortcuts" || true
 	sudo ln -sf "$(PWD)/links" "$(CONFIG_PATH)/links" || true
 	sudo ln -sf "$(PWD)/dist/$(BINARY_NAME)" "$(INSTALL_PATH)/$(BINARY_NAME)"

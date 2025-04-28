@@ -13,7 +13,12 @@ import (
 
 func main() {
 
-	config := cnf.LoadConfig()
+	config, err := cnf.LoadConfig()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error loading config: %v\n", err)
+		os.Exit(1)
+	}
+
 	localShortcuts := utils.LoadLocalShortcuts()
 
 	if len(os.Args) == 1 {
