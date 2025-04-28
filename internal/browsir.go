@@ -23,11 +23,10 @@ type ICommand interface {
 
 type Command struct{}
 
-// add, rm, list, preview
 func (c Command) add(args []string) error {
 	switch args[0] {
 	case "link":
-		err := utils.CheckInputArgs(len(args), 2);
+		err := utils.CheckInputArgs(len(args), 2)
 		if err != nil {
 			os.Exit(0)
 		}
@@ -46,7 +45,7 @@ func (c Command) add(args []string) error {
 		}
 		return nil
 	case "shortcut":
-		err := utils.CheckInputArgs(len(args), 3);
+		err := utils.CheckInputArgs(len(args), 3)
 		if err != nil {
 			os.Exit(0)
 		}
@@ -65,7 +64,7 @@ func (c Command) remove(args []string) error {
 	case "link":
 		fmt.Println("rm link is not yet implemented")
 	case "shortcut":
-		err := utils.CheckInputArgs(len(args), 2);
+		err := utils.CheckInputArgs(len(args), 2)
 		if err != nil {
 			os.Exit(0)
 		}
@@ -86,6 +85,7 @@ func (c Command) list(args []string) error {
 	}
 	return nil
 }
+
 func (c Command) preview(args []string) error {
 	ctx := context.Background()
 	deadline := time.Now().Add(3000 * time.Millisecond)
