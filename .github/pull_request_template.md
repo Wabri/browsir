@@ -34,3 +34,4 @@ Please carefully read the code of conduct before creating a pull request
 
 - [ ] I have linked an issue or discussion.
 - [ ] I have updated the documentation accordingly.
+- [ ] I have added one or more tests for my pull request
