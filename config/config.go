@@ -21,26 +21,6 @@ type Profile struct {
 	Description string `yaml:"description"`
 }
 
-func findConfigFile() (string, error) {
-	configHome := os.Getenv("XDG_CONFIG_HOME")
-	if configHome == "" {
-		configHome = os.Getenv("HOME") + "/.config"
-	}
-	configPath := configHome + "/browsir/config.yml"
-
-	if _, err := os.Stat(configPath); err == nil {
-		return configPath, nil
-	}
-
-	// Fallback to /etc
-	configPath = "/etc/browsir/config.yml"
-	if _, err := os.Stat(configPath); err == nil {
-		return configPath, nil
-	}
-
-	return "", fmt.Errorf("config file not found")
-}
-
 func LoadConfig() (Config, error) {
 	configPath, err := findConfigFile()
 	if err != nil {
@@ -76,4 +56,24 @@ func LoadConfig() (Config, error) {
 	}
 
 	return config, nil
+}
+
+func findConfigFile() (string, error) {
+	configHome := os.Getenv("XDG_CONFIG_HOME")
+	if configHome == "" {
+		configHome = os.Getenv("HOME") + "/.config"
+	}
+	configPath := configHome + "/browsir/config.yml"
+
+	if _, err := os.Stat(configPath); err == nil {
+		return configPath, nil
+	}
+
+	// Fallback to /etc
+	configPath = "/etc/browsir/config.yml"
+	if _, err := os.Stat(configPath); err == nil {
+		return configPath, nil
+	}
+
+	return "", fmt.Errorf("config file not found")
 }
