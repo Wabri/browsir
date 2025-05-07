@@ -1,10 +1,10 @@
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/c531f18b-5886-464a-a189-971b39134aee" alt="Browsir Logo" width="250">
+  <img src="logo.png" alt="BrowsirX Logo" width="250">
 </div>
 
-# Browsir 🎩
+# BrowsirX 🎩
 
-A simple yet powerful command-line tool to manage multiple browser profiles and shortcuts.
+(A fork of) A simple yet powerful command-line tool to manage multiple browser profiles and shortcuts.
 
 ## Features ✨
 
@@ -23,7 +23,7 @@ A simple yet powerful command-line tool to manage multiple browser profiles and 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/browsir.git
+   git clone https://github.com/wabri/browsirx.git
    cd browsir
    ```
 
