@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"os"
 	"testing"
 )
@@ -57,8 +56,10 @@ func TestConfig(t *testing.T) {
 		setupEmptyEnvs()
 		_, err := LoadConfig()
 		if err != nil {
-			fmt.Println(err)
+			return
 		}
+
+		t.Errorf("got %v, wanted error", err)
 
 		cleanUpEnvs()
 	})
