@@ -5,7 +5,6 @@ import (
 	"testing"
 )
 
-// /Users/404answernotfound
 var HOME = os.Getenv("HOME")
 
 func TestConfig(t *testing.T) {
