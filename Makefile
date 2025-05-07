@@ -17,10 +17,10 @@ clean:
 	rm -f $(BINARY_NAME)
 
 install: build
-	sudo mkdir -p $(CONFIG_PATH)
-	sudo ln -sf "$(PWD)/config.yml" "$(CONFIG_PATH)/config.yml" || true
-	sudo ln -sf "$(PWD)/shortcuts" "$(CONFIG_PATH)/shortcuts" || true
-	sudo ln -sf "$(PWD)/links" "$(CONFIG_PATH)/links" || true
+	mkdir -p $(CONFIG_PATH)
+	ln -sf "$(PWD)/config.yml" "$(CONFIG_PATH)/config.yml" || true
+	ln -sf "$(PWD)/shortcuts" "$(CONFIG_PATH)/shortcuts" || true
+	ln -sf "$(PWD)/links" "$(CONFIG_PATH)/links" || true
 	sudo ln -sf "$(PWD)/dist/$(BINARY_NAME)" "$(INSTALL_PATH)/$(BINARY_NAME)"
 	@echo "Created symlink to $(BINARY_NAME) in $(INSTALL_PATH)"
 	@echo "Created symlinks to config files in $(CONFIG_PATH)"
