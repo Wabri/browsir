@@ -2,3 +2,4 @@
 dist
 browsir
 .browsir.yml
+.vscode
