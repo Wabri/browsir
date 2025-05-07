@@ -69,11 +69,5 @@ func findConfigFile() (string, error) {
 		return configPath, nil
 	}
 
-	// Fallback to /etc
-	configPath = "/etc/browsir/config.yml"
-	if _, err := os.Stat(configPath); err == nil {
-		return configPath, nil
-	}
-
 	return "", fmt.Errorf("config file not found")
 }
