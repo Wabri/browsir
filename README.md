@@ -1,8 +1,8 @@
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/c531f18b-5886-464a-a189-971b39134aee" alt="Browsir Logo" width="250">
+  <img src="browsirX.png" alt="BrowsirX Logo" width="250">
 </div>
 
-# Browsir 🎩
+# Browsir**X** 🎩
 
 A simple yet powerful command-line tool to manage multiple browser profiles and shortcuts.
 
