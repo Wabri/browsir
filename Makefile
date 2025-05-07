@@ -2,7 +2,7 @@
 
 BINARY_NAME=browsir
 INSTALL_PATH=/usr/local/bin
-CONFIG_PATH=/etc/browsir
+CONFIG_PATH=$(HOME)/.config/browsir
 
 all: build
 
