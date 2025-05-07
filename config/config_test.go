@@ -88,7 +88,7 @@ func getConfigDir(t *testing.T) string {
 	if homeDir == "" {
 		t.Fatal("HOME environment variable is not set")
 	}
-	configDir := homeDir + "/.config/browsir"
+	configDir := homeDir + "/.configtest/browsir"
 
 	return configDir
 }
