@@ -66,6 +66,8 @@ func findConfigFile() (string, error) {
 	configPath := configHome + "/browsir/config.yml"
 
 	if _, err := os.Stat(configPath); err == nil {
+		what, err := os.Stat(configPath)
+		fmt.Println(what, err)
 		return configPath, nil
 	}
 
