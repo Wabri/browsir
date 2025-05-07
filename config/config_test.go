@@ -1,11 +1,11 @@
 package config
 
 import (
+	"github.com/404answernotfound/browsir/tests"
+
 	"os"
 	"testing"
 )
-
-var HOME = os.Getenv("HOME")
 
 func TestConfig(t *testing.T) {
 
@@ -47,12 +47,12 @@ func TestConfig(t *testing.T) {
 			t.Errorf("got %v, want %v", len(tc.got.Profiles), len(tc.want.Profiles))
 		}
 
-		configDir := getConfigDir(t)
-		cleanUp(t, configDir)
+		configDir := tests.GetConfigDir(t)
+		tests.CleanUp(t, configDir)
 	})
 
 	t.Run("Test empty configuration should return error", func(t *testing.T) {
-		setupEmptyEnvs()
+		tests.SetupEmptyEnvs()
 		_, err := LoadConfig()
 		if err != nil {
 			return
@@ -60,14 +60,14 @@ func TestConfig(t *testing.T) {
 
 		t.Errorf("got %v, wanted error", err)
 
-		cleanUpEnvs()
+		tests.CleanUpEnvs()
 	})
 
 }
 
 func setupConfigDir(t *testing.T) {
 	// Set up config files as would be done by installing browsir
-	configDir := getConfigDir(t)
+	configDir := tests.GetConfigDir(t)
 	err := os.MkdirAll(configDir, 0755)
 	if err != nil {
 		t.Fatalf("Error creating config directory: %v", err)
@@ -81,32 +81,4 @@ func setupConfigDir(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Error writing config file: %v", err)
 	}
-}
-
-func getConfigDir(t *testing.T) string {
-	homeDir := os.Getenv("HOME")
-	if homeDir == "" {
-		t.Fatal("HOME environment variable is not set")
-	}
-	configDir := homeDir + "/.configtest/browsir"
-
-	return configDir
-}
-
-func cleanUp(t *testing.T, configDir string) {
-	// Clean up the mocked config after the test
-	t.Cleanup(func() {
-		err := os.RemoveAll(configDir)
-		if err != nil {
-			t.Fatalf("Error cleaning up config directory: %v", err)
-		}
-	})
-}
-
-func setupEmptyEnvs() {
-	os.Setenv("HOME", "/dev/null")
-}
-
-func cleanUpEnvs() {
-	os.Setenv("HOME", HOME)
 }
