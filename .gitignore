@@ -3,3 +3,6 @@ dist
 browsir
 .browsir.yml
 .vscode
+links
+shortcuts
+config.yml
