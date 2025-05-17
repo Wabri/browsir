@@ -61,7 +61,7 @@ func main() {
 				fmt.Println("  browsir v" + version)
 			} else {
 				// FIXME: This should be set either at build or in .envrc
-				fmt.Println("  browsir version not set")
+				fmt.Println("  browsir v2.0.0")
 			}
 		case "-ls", "--list-shortcuts":
 			utils.PrintLocalShortcuts(localShortcuts)
