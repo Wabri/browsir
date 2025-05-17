@@ -31,9 +31,9 @@ A simple yet powerful command-line tool to manage multiple browser profiles and 
 
    **READ ME Before you continue the installation**
 
-If you already used `browsir` and are downloading it with `clone` instead of pulling latest updates from `main`
-you risk overwriting your `links` and `shortcuts` files, alongside your `.browsir.yml` file. This will force you
-to enter all the previously saved informations again, so, until an actual installer is ready, be sure to either pull the latest updates _OR_ save your configurations somewhere else, clone and then swap them with the installed ones.
+If you already used `browsir`, version 2.0.0 has breaking changes for configuration files.
+
+This will force you to enter all the previously saved informations again, so be sure to save your configurations somewhere else, clone and then swap them with the installed ones which are now in `$HOME/.config/browsir/(config.yml|links|shortcuts)`
 
 ```bash
 make install
@@ -41,7 +41,7 @@ make install
 
 This will build the binary and install it to `/usr/local/bin`
 
-It might prompt you for the password. This is because we are trying to write files in locations like `/etc/`.
+It might prompt you for the password. This is because we are trying to write files in locations like `/usr/`.
 
 You do have the source code tho, so you can either check that everything is nice _or_ you can change the installation folders yourself in the Makefile!
 
@@ -55,6 +55,21 @@ You can also just build without installing:
 ```bash
 make build
 ./browsir --version
+```
+
+## Update
+
+```bash
+make update
+```
+
+This will build the binary and install it to `/usr/local/bin`
+
+It might prompt you for the password. This is because we are trying to write files in locations like `/usr/`.
+
+Verify the installation:
+```bash
+browsir --version
 ```
 
 ## Usage 📖
