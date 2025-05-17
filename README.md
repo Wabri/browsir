@@ -74,7 +74,7 @@ browsir personal -q="What's the distance between the moon and the sun"
 browsir personal -se=brave -q="Is Brave better for privacy"
 
 # Manage links and shortcuts
-browsir add link <link> -c <categories>    # Add a link with categories
+browsir add link <link> -c="<categories>"    # Add a link with categories
 browsir add shortcut <shortcut> <url>      # Add a local shortcut, do not include http:// or https://
 browsir rm link <link>                     # Remove a link
 browsir rm shortcut <shortcut>             # Remove a local shortcut

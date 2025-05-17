@@ -19,7 +19,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	localShortcuts := utils.LoadLocalShortcuts()
+	localShortcuts, err := utils.LoadLocalShortcuts()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error loading shortcuts: %v\n", err)
+		os.Exit(0)
+	}
 
 	if len(os.Args) == 1 {
 		utils.PrintUsage(config.Profiles, config.Shortcuts, localShortcuts)
@@ -56,10 +60,11 @@ func main() {
 			if version := os.Getenv("BROWSIR_VERSION"); version != "" {
 				fmt.Println("  browsir v" + version)
 			} else {
+				// FIXME: This should be set either at build or in .envrc
 				fmt.Println("  browsir version not set")
 			}
 		case "-ls", "--list-shortcuts":
-			utils.PrintLocalShortcuts(config.Shortcuts)
+			utils.PrintLocalShortcuts(localShortcuts)
 		case "-p", "--profiles":
 			utils.PrintProfiles(config.Profiles)
 		}

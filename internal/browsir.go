@@ -79,7 +79,11 @@ func (c Command) remove(args []string) error {
 }
 
 func (c Command) list(args []string) error {
-	links := utils.LoadLinks()
+	links, err := utils.LoadLinks()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "There was an issue loading your links configuration, %v\n", err)
+		os.Exit(0)
+	}
 	for link, categories := range links {
 		fmt.Printf("Link: %s - Categories: %s\n", link, categories)
 	}
