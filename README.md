@@ -103,6 +103,7 @@ browsir preview <link>                     # Preview a link
 ```bash
 -ls, --list-shortcuts, list all shortcuts
 -se, --search-engine, set search engine for search
+-nop, --no-prompt, do not prompt the user for input
 -q, query search engine
 -v, --version, check browsir version
 -h, --help, help

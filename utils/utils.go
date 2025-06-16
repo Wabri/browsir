@@ -288,6 +288,7 @@ func PrintUsage(profiles []config.Profile, shortcuts map[string]string, localSho
 	fmt.Println("  -p, --profiles        # List all profiles")
 	fmt.Println("  -q        		     # Search the web with a query")
 	fmt.Println("  -se, --search-engine  # Specify search engine (google, duckduckgo, brave)")
+	fmt.Println("  -nop, --no-prompts    # Disable prompts")
 
 	fmt.Println("   browsir add link <link> -c=<categories>	# Add a link with categories")
 	fmt.Println("   browsir add shortcut <shortcut> <url>	# Add a local shortcut, do not include http:// or https://")

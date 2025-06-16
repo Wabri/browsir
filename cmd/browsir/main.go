@@ -11,6 +11,8 @@ import (
 	"github.com/404answernotfound/browsir/utils"
 )
 
+var PROMPT bool = true
+
 func main() {
 
 	config, err := cnf.LoadConfig()
@@ -49,8 +51,10 @@ func main() {
 		}
 	}
 
-	primitiveFlags := []string{"-v", "--version", "-h", "--help", "-ls", "--list-shortcuts", "-p", "--profiles"}
+	primitiveFlags := []string{"-v", "--version", "-h", "--help", "-ls", "--list-shortcuts", "-p", "--profiles", "-nop", "--no-prompts"}
 	var shouldExit bool
+
+	flags := utils.GetFlags(args)
 
 	for _, arg := range args {
 		switch arg {
@@ -67,6 +71,9 @@ func main() {
 			utils.PrintLocalShortcuts(localShortcuts)
 		case "-p", "--profiles":
 			utils.PrintProfiles(config.Profiles)
+		case "-nop", "--no-prompts":
+            PROMPT = false
+            println("\033[32m[INFO]\033[0m Prompts disabled.")
 		}
 
 		if utils.Contains(primitiveFlags, arg) {
@@ -78,8 +85,6 @@ func main() {
 	if shouldExit {
 		os.Exit(0)
 	}
-
-	flags := utils.GetFlags(args)
 
 	var profileName string
 	var url string
@@ -149,8 +154,7 @@ func main() {
 					os.Exit(1)
 				}
 
-				// If no similar shortcuts found, ask if they want to save it
-				if utils.PromptYesNo("Would you like to save this as a shortcut?") {
+				if PROMPT && utils.PromptYesNo("Would you like to save this as a shortcut?") {
 					fmt.Print("Enter the website URL: ")
 					reader := bufio.NewReader(os.Stdin)
 					websiteURL, _ := reader.ReadString('\n')
